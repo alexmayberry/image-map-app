@@ -1,4 +1,11 @@
-import { ArrayMaxSize, ArrayMinSize, IsArray, IsNumber, IsOptional, IsString } from 'class-validator';
+import {
+  ArrayMaxSize,
+  ArrayMinSize,
+  IsArray,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { Point } from 'typeorm';
 
 export class CreateMediaDto {
@@ -12,7 +19,10 @@ export class CreateMediaDto {
   readonly day: number;
 
   @IsOptional()
-  readonly point?: Point;
+  @IsNumber({}, { each: true })
+  @ArrayMinSize(2)
+  @ArrayMaxSize(3)
+  readonly point?: number[];
 
   @IsString()
   readonly type: string; // blog image, video, audio

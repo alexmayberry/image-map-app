@@ -27,8 +27,8 @@ export class Media {
   @Column()
   day: number;
 
-  @Column({ type: 'geography', spatialFeatureType: 'Point', srid: 4326 })
-  point: Point;
+  @Column('simple-array', { nullable: true })
+  point: number[];
 
   @Column({ nullable: true })
   type: string; // blog image, video, audio

@@ -100,10 +100,10 @@ export class TripsService {
       where: { username },
     });
     if (existingUser) {
-      console.log("user found for create trip")
+      console.log('user found for create trip');
       return existingUser;
     }
-    console.log("user NOT found for create trip")
+    console.log('user NOT found for create trip');
     return this.userRepository.create({ username });
   }
 

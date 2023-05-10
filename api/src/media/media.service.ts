@@ -37,7 +37,7 @@ export class MediaService {
       where: { id: +id },
       relations: {
         user: true,
-        trip: true
+        trip: true,
       },
     });
     if (!media) {
@@ -50,14 +50,14 @@ export class MediaService {
   async create(createMediaDto: CreateMediaDto) {
     const user = await this.preloadUserByName(createMediaDto.user);
 
-    const trip = await this.preloadTripId(createMediaDto.trip)
+    const trip = await this.preloadTripId(createMediaDto.trip);
 
     console.log(createMediaDto);
 
-
-    const media = this.mediaRepository.create({ ...createMediaDto,
-    trip,
-    user,
+    const media = this.mediaRepository.create({
+      ...createMediaDto,
+      trip,
+      user,
     });
 
     return this.mediaRepository.save(media);
@@ -77,10 +77,10 @@ export class MediaService {
 
   private async preloadTripId(id: number): Promise<Trip> {
     const existingTrip = await this.tripRepository.findOne({
-      where: { id},
-    })
+      where: { id },
+    });
     if (existingTrip) {
-      return existingTrip
+      return existingTrip;
     }
     throw new NotFoundException(`Trip #${id} not found for create media`);
   }
