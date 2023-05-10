@@ -19,10 +19,7 @@ export class CreateMediaDto {
   readonly day: number;
 
   @IsOptional()
-  @IsNumber({}, { each: true })
-  @ArrayMinSize(2)
-  @ArrayMaxSize(3)
-  readonly point?: number[];
+  readonly point?: Point;
 
   @IsString()
   readonly type: string; // blog image, video, audio

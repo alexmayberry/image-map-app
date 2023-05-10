@@ -1,17 +1,14 @@
 services:
   db:
-    image: postgres
+    image: postgis/postgis:15-3.3
     restart: always
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_PASSWORD: pass123
+      - POSTGRES_USER=${PGIS_USERNAME}
+      - POSTGRES_PASSWORD=${PGIS_PASSWORD}
+      - POSTGRES_DB=${PGIS_NAME}
+    env_file:
+      - ./api/.env
     volumes:
       - ./data:/var/lib/postgresql/data
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-    command: >
-      bash -c "
-        echo 'CREATE EXTENSION postgis;' >> /docker-entrypoint-initdb.d/init.sql
-        echo 'CREATE EXTENSION postgis_topology;' >> /docker-entrypoint-initdb.d/init.sql
-        docker-entrypoint.sh postgres
-      "

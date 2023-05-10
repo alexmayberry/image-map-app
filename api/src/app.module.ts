@@ -5,6 +5,9 @@ import { AppService } from './app.service';
 import { TripsModule } from './trips/trips.module';
 import { UsersModule } from './users/users.module';
 import { MediaModule } from './media/media.module';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 @Module({
   imports: [
@@ -12,9 +15,9 @@ import { MediaModule } from './media/media.module';
       type: 'postgres',
       host: 'localhost',
       port: 5432,
-      username: 'postgres',
-      password: 'pass123',
-      database: 'postgres',
+      username: process.env.PGIS_USERNAME,
+      password: process.env.PGIS_PASSWORD,
+      database: process.env.PGIS_NAME,
       autoLoadEntities: true,
       synchronize: true,
     }),

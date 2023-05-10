@@ -27,8 +27,8 @@ export class Media {
   @Column()
   day: number;
 
-  @Column('simple-array', { nullable: true })
-  point: number[];
+  @Column('geometry', { nullable: true })
+  point: Point;
 
   @Column({ nullable: true })
   type: string; // blog image, video, audio

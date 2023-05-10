@@ -1,4 +1,4 @@
-import { Body, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Body, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto/pagination-query.dto';
 import { Trip } from 'src/trips/entities/trip.entity/trip.entity';
@@ -8,6 +8,7 @@ import { CreateMediaDto } from './dto/create-media.dto';
 import { UpdateMediaDto } from './dto/update-media.dto';
 import { Media } from './entities/media.entity';
 import { type } from 'os';
+import * as gjv from 'geojson-validation';
 
 @Injectable()
 export class MediaService {
@@ -52,7 +53,11 @@ export class MediaService {
 
     const trip = await this.preloadTripId(createMediaDto.trip);
 
-    console.log(createMediaDto);
+    if (gjv.valid(createMediaDto.point)) {
+      console.log("valid geojson!");
+    } else {
+      throw new BadRequestException(`invalid geojson`, { cause: new Error(), description: 'consult geojson docs to find correct syntax' });
+    }
 
     const media = this.mediaRepository.create({
       ...createMediaDto,
