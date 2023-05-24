@@ -1,4 +1,5 @@
-import { IsArray, IsNumber, IsString } from 'class-validator';
+import { IsArray, IsNotEmpty, IsNumber, IsObject, IsString } from 'class-validator';
+import { Feature, FeatureCollection, MultiLineString } from 'typeorm';
 
 export class CreateTripDto {
   @IsString()
@@ -13,13 +14,13 @@ export class CreateTripDto {
   @IsString({ each: true })
   readonly users: string[]; // many to many
 
-  @IsString()
-  readonly route: string;
+  @IsObject()
+  readonly route: MultiLineString;
 
   // @IsNumber()
   // @IsArray()
   // readonly media: number[]; // one to many
 
-  @IsString()
-  readonly days: string; // one to many
+  @IsNotEmpty()
+  readonly days: Feature;
 }

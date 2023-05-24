@@ -4,9 +4,12 @@ import { User } from 'src/users/entities/user.entity';
 import {
   Column,
   Entity,
+  Feature,
+  FeatureCollection,
   JoinTable,
   ManyToMany,
   ManyToOne,
+  MultiLineString,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -28,14 +31,14 @@ export class Trip {
   @ManyToMany((type) => User, (user) => user.trips)
   users: User[]; // many to many
 
-  @Column({ nullable: true })
-  route: string;
+  @Column('geometry',{ nullable: true })
+  route: MultiLineString;
 
   @OneToMany((type) => Media, (media) => media.trip, {
     cascade: true, // ['instert]
   })
   media: Media[];
 
-  @Column({ nullable: true })
-  days: string; // one to many
+  @Column('geometry', { nullable: true })
+  days: Feature;
 }
